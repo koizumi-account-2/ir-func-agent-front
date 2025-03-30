@@ -2,9 +2,11 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Outlet } from "@tanstack/react-router";
 import { RouterContext } from "@/types/type";
 import { useEffect } from "react";
+import { LayoutA } from "./-layout/LayoutA";
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,
   beforeLoad: async ({ context }) => {
+    return;
     const { auth } = context as RouterContext;
     console.log(auth);
     if (!auth.isLogged()) {
@@ -18,7 +20,6 @@ function RouteComponent() {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       console.log("beforeunload");
       e.preventDefault(); // 一部ブラウザではこれが必要
-      e.returnValue = "やめとけ";
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -26,8 +27,11 @@ function RouteComponent() {
   }, []);
   return (
     <div>
-      <>AUTH</>
-      <Outlet />
+      <LayoutA
+        header={<div>header</div>}
+        content={<Outlet />}
+        footer={<div>footer</div>}
+      />
     </div>
   );
 }

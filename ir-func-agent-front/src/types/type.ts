@@ -5,9 +5,9 @@ export type AuthContext = {
 };
 
 export type UserInfo = {
-  id: string;
+  userID: string;
   email: string;
-  password: string;
+  role: string[];
 };
 
 

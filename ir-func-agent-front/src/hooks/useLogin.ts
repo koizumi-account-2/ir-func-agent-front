@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { authAtom } from '../atoms/authAtom';
 import { useState } from 'react';
-import { AXIOS_INSTANCE_DB } from '@/lib/apiClient';
+import { AXIOS_INSTANCE_DB, AXIOS_INSTANCE_SERVER } from '@/lib/apiClient';
 import useCustomInstance from './useCustomInstance';
 import axios, { AxiosResponse } from 'axios';
 import { UserInfo } from '@/types/type';
@@ -14,7 +14,8 @@ type LoginParams = {
 
 export const useLogin = () => {
     
-    const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_DB);
+    //const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_DB);
+    const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_SERVER);
     const [, setAuth] = useAtom(authAtom);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -25,18 +26,19 @@ export const useLogin = () => {
 
         try {
             const response= await customInstance({
-                method: 'GET',
-                url: '/users/1',
-                // data: {
-                //     id:"1"
-                // }
+                method: 'POST',
+                url: '/login',
+                data: {
+                    email: username,
+                    password: password
+                }
             });
             console.log(response);
             // 成功したら状態更新
             setAuth({
-                id: response.id,
+                userID: response.userID,
                 email: response.email,
-                password: response.password
+                role: response.role
             });
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {

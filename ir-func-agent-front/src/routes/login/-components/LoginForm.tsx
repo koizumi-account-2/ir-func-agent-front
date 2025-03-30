@@ -43,7 +43,7 @@ export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="shadcn" type="password" {...field} />
               </FormControl>
               <FormDescription>
                 This is your public display name.
