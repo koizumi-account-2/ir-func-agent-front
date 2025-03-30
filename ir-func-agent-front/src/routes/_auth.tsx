@@ -3,6 +3,10 @@ import { Outlet } from "@tanstack/react-router";
 import { RouterContext } from "@/types/type";
 import { useEffect } from "react";
 import { LayoutA } from "./-layout/LayoutA";
+import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,
   beforeLoad: async ({ context }) => {
@@ -27,11 +31,19 @@ function RouteComponent() {
   }, []);
   return (
     <div>
-      <LayoutA
-        header={<div>header</div>}
-        content={<Outlet />}
-        footer={<div>footer</div>}
-      />
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">
+            <div className="@container/main flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-4 p-4 md:gap-6 md:py-6">
+                <Outlet />
+              </div>
+            </div>
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
     </div>
   );
 }
