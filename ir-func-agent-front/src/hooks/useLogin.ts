@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai';
 import { authAtom } from '../atoms/authAtom';
 import { useState } from 'react';
-import { AXIOS_INSTANCE_DB, AXIOS_INSTANCE_SERVER } from '@/lib/apiClient';
-import useCustomInstance from './useCustomInstance';
-import axios, { AxiosResponse } from 'axios';
+import { AXIOS_INSTANCE_SERVER } from '@/api/apiClient';
+import getCustomInstance from '@/lib/getCustomInstance';
+import axios from 'axios';
 import { UserInfo } from '@/types/type';
 
 type LoginParams = {
@@ -15,7 +15,7 @@ type LoginParams = {
 export const useLogin = () => {
     
     //const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_DB);
-    const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_SERVER);
+    const customInstance = getCustomInstance<UserInfo>(AXIOS_INSTANCE_SERVER);
     const [, setAuth] = useAtom(authAtom);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -27,13 +27,13 @@ export const useLogin = () => {
         try {
             const response= await customInstance({
                 method: 'POST',
-                url: '/login',
+                url: '/auth/login',
                 data: {
                     email: username,
                     password: password
                 }
             });
-            console.log(response);
+            console.log("Login成功",response);
             // 成功したら状態更新
             setAuth({
                 userID: response.userID,
@@ -51,5 +51,30 @@ export const useLogin = () => {
         }
     };
 
-    return { login, loading, error };
+    const logout = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response= await customInstance({
+                method: 'POST',
+                url: '/auth/logout'
+            });
+            console.log(response);
+            // 成功したら状態更新
+            setAuth(null);
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                setError(err.response?.data?.message || 'ログアウトに失敗しました');
+            } else {
+                setError('予期せぬエラーが発生しました');
+            }
+        } finally {
+            setLoading(false);
+            setAuth(null);
+        }
+        
+
+    };
+    return { login, loading, error, logout };
 };

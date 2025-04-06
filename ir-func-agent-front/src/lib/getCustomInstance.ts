@@ -1,6 +1,6 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export const useCustomInstance = <T>(instance: AxiosInstance): ((
+export const getCustomInstance = <T>(instance: AxiosInstance): ((
   config: AxiosRequestConfig,
 ) => Promise<T>) => {
   return (config: AxiosRequestConfig) => {
@@ -19,4 +19,4 @@ export const useCustomInstance = <T>(instance: AxiosInstance): ((
   };
 };
 
-export default useCustomInstance;
+export default getCustomInstance;

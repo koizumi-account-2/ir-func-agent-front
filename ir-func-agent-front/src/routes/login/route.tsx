@@ -1,4 +1,3 @@
-import { useLogin } from "@/hooks/useLogin";
 import { createFileRoute } from "@tanstack/react-router";
 import { useNavigate } from "@tanstack/react-router";
 import { LoginForm } from "./-components/LoginForm";
@@ -17,7 +16,6 @@ function RouteComponent() {
       {/* <TestButton onClick={clickHandler} variant={"danger"}>login</TestButton> */}
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
         <LoginForm afterLogin={afterLogin} />
-        <button onClick={() => navigate({ to: "/home" })}>ホーム</button>
       </div>
     </div>
   );

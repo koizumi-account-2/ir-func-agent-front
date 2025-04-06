@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   SidebarContent,
   SidebarGroup,
@@ -12,37 +13,30 @@ export const CustomSideBarContent = () => {
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/home",
     },
     {
-      title: "Inbox",
-      url: "#",
-    },
-    {
-      title: "Calendar",
-      url: "#",
-    },
-    {
-      title: "Search",
-      url: "#",
-    },
-    {
-      title: "Settings",
-      url: "#",
+      title: "Presentation",
+      url: "/presentation/background",
     },
   ];
   return (
     <SidebarContent>
       <SidebarGroup>
-        <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <SidebarGroupLabel>Menu</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                  <Link
+                    activeProps={{
+                      className: "text-accent-foreground bg-primary/10",
+                    }}
+                    to={item.url}
+                  >
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}

@@ -15,3 +15,4 @@ export const AXIOS_INSTANCE_SERVER = Axios.create({
     headers: {
     'Content-Type': 'application/json',
     },withCredentials: true});
+

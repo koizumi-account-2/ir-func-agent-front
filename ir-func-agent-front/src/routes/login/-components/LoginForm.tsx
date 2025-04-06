@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Form,
   FormField,
@@ -11,7 +10,6 @@ import {
 import { useLoginForm } from "../-hooks/useLoginForm";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
 
 export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
   const { form, onSubmit, loading, error } = useLoginForm(afterLogin);
@@ -28,9 +26,7 @@ export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}

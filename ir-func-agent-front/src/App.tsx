@@ -5,7 +5,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routeTree } from "./routeTree.gen";
 import { getDefaultStore } from "jotai";
 import { authAtom } from "./atoms/authAtom";
-
+import { ErrorBoundary } from "react-error-boundary";
+import { Suspense } from "react";
+import { UserInfo } from "@/types/type";
 const store = getDefaultStore();
 const queryClient = new QueryClient();
 const router = createRouter({
@@ -29,14 +31,22 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider
-        context={{
-          ...router.options.context,
-          queryClient, // ここでセット
+      <ErrorBoundary
+        fallbackRender={({ error, resetErrorBoundary }) => {
+          return <div>エラーが発生しました</div>;
         }}
-        router={router}
-        defaultNotFoundComponent={() => <h1>見つからず</h1>}
-      />
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <RouterProvider
+            context={{
+              ...router.options.context,
+              queryClient, // ここでセット
+            }}
+            router={router}
+            defaultNotFoundComponent={() => <h1>Not Found</h1>}
+          />
+        </Suspense>
+      </ErrorBoundary>
     </QueryClientProvider>
   );
 }

@@ -14,7 +14,13 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as LoginRouteImport } from './routes/login/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthSettingRouteImport } from './routes/_auth/setting/route'
+import { Route as AuthPresentationRouteImport } from './routes/_auth/presentation/route'
 import { Route as AuthHomeRouteImport } from './routes/_auth/home/route'
+import { Route as AuthPresentationResultRouteImport } from './routes/_auth/presentation/result/route'
+import { Route as AuthPresentationRequestRouteImport } from './routes/_auth/presentation/request/route'
+import { Route as AuthPresentationPersonaRouteImport } from './routes/_auth/presentation/persona/route'
+import { Route as AuthPresentationBackgroundRouteImport } from './routes/_auth/presentation/background/route'
 
 // Create/Update Routes
 
@@ -35,11 +41,51 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthSettingRouteRoute = AuthSettingRouteImport.update({
+  id: '/setting',
+  path: '/setting',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthPresentationRouteRoute = AuthPresentationRouteImport.update({
+  id: '/presentation',
+  path: '/presentation',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const AuthHomeRouteRoute = AuthHomeRouteImport.update({
   id: '/home',
   path: '/home',
   getParentRoute: () => AuthRoute,
 } as any)
+
+const AuthPresentationResultRouteRoute =
+  AuthPresentationResultRouteImport.update({
+    id: '/result',
+    path: '/result',
+    getParentRoute: () => AuthPresentationRouteRoute,
+  } as any)
+
+const AuthPresentationRequestRouteRoute =
+  AuthPresentationRequestRouteImport.update({
+    id: '/request',
+    path: '/request',
+    getParentRoute: () => AuthPresentationRouteRoute,
+  } as any)
+
+const AuthPresentationPersonaRouteRoute =
+  AuthPresentationPersonaRouteImport.update({
+    id: '/persona',
+    path: '/persona',
+    getParentRoute: () => AuthPresentationRouteRoute,
+  } as any)
+
+const AuthPresentationBackgroundRouteRoute =
+  AuthPresentationBackgroundRouteImport.update({
+    id: '/background',
+    path: '/background',
+    getParentRoute: () => AuthPresentationRouteRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -73,17 +119,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthHomeRouteImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/presentation': {
+      id: '/_auth/presentation'
+      path: '/presentation'
+      fullPath: '/presentation'
+      preLoaderRoute: typeof AuthPresentationRouteImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/setting': {
+      id: '/_auth/setting'
+      path: '/setting'
+      fullPath: '/setting'
+      preLoaderRoute: typeof AuthSettingRouteImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/presentation/background': {
+      id: '/_auth/presentation/background'
+      path: '/background'
+      fullPath: '/presentation/background'
+      preLoaderRoute: typeof AuthPresentationBackgroundRouteImport
+      parentRoute: typeof AuthPresentationRouteImport
+    }
+    '/_auth/presentation/persona': {
+      id: '/_auth/presentation/persona'
+      path: '/persona'
+      fullPath: '/presentation/persona'
+      preLoaderRoute: typeof AuthPresentationPersonaRouteImport
+      parentRoute: typeof AuthPresentationRouteImport
+    }
+    '/_auth/presentation/request': {
+      id: '/_auth/presentation/request'
+      path: '/request'
+      fullPath: '/presentation/request'
+      preLoaderRoute: typeof AuthPresentationRequestRouteImport
+      parentRoute: typeof AuthPresentationRouteImport
+    }
+    '/_auth/presentation/result': {
+      id: '/_auth/presentation/result'
+      path: '/result'
+      fullPath: '/presentation/result'
+      preLoaderRoute: typeof AuthPresentationResultRouteImport
+      parentRoute: typeof AuthPresentationRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthPresentationRouteRouteChildren {
+  AuthPresentationBackgroundRouteRoute: typeof AuthPresentationBackgroundRouteRoute
+  AuthPresentationPersonaRouteRoute: typeof AuthPresentationPersonaRouteRoute
+  AuthPresentationRequestRouteRoute: typeof AuthPresentationRequestRouteRoute
+  AuthPresentationResultRouteRoute: typeof AuthPresentationResultRouteRoute
+}
+
+const AuthPresentationRouteRouteChildren: AuthPresentationRouteRouteChildren = {
+  AuthPresentationBackgroundRouteRoute: AuthPresentationBackgroundRouteRoute,
+  AuthPresentationPersonaRouteRoute: AuthPresentationPersonaRouteRoute,
+  AuthPresentationRequestRouteRoute: AuthPresentationRequestRouteRoute,
+  AuthPresentationResultRouteRoute: AuthPresentationResultRouteRoute,
+}
+
+const AuthPresentationRouteRouteWithChildren =
+  AuthPresentationRouteRoute._addFileChildren(
+    AuthPresentationRouteRouteChildren,
+  )
+
 interface AuthRouteChildren {
   AuthHomeRouteRoute: typeof AuthHomeRouteRoute
+  AuthPresentationRouteRoute: typeof AuthPresentationRouteRouteWithChildren
+  AuthSettingRouteRoute: typeof AuthSettingRouteRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthHomeRouteRoute: AuthHomeRouteRoute,
+  AuthPresentationRouteRoute: AuthPresentationRouteRouteWithChildren,
+  AuthSettingRouteRoute: AuthSettingRouteRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -93,6 +204,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRouteRoute
   '': typeof AuthRouteWithChildren
   '/home': typeof AuthHomeRouteRoute
+  '/presentation': typeof AuthPresentationRouteRouteWithChildren
+  '/setting': typeof AuthSettingRouteRoute
+  '/presentation/background': typeof AuthPresentationBackgroundRouteRoute
+  '/presentation/persona': typeof AuthPresentationPersonaRouteRoute
+  '/presentation/request': typeof AuthPresentationRequestRouteRoute
+  '/presentation/result': typeof AuthPresentationResultRouteRoute
 }
 
 export interface FileRoutesByTo {
@@ -100,6 +217,12 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRouteRoute
   '': typeof AuthRouteWithChildren
   '/home': typeof AuthHomeRouteRoute
+  '/presentation': typeof AuthPresentationRouteRouteWithChildren
+  '/setting': typeof AuthSettingRouteRoute
+  '/presentation/background': typeof AuthPresentationBackgroundRouteRoute
+  '/presentation/persona': typeof AuthPresentationPersonaRouteRoute
+  '/presentation/request': typeof AuthPresentationRequestRouteRoute
+  '/presentation/result': typeof AuthPresentationResultRouteRoute
 }
 
 export interface FileRoutesById {
@@ -108,14 +231,51 @@ export interface FileRoutesById {
   '/login': typeof LoginRouteRoute
   '/_auth': typeof AuthRouteWithChildren
   '/_auth/home': typeof AuthHomeRouteRoute
+  '/_auth/presentation': typeof AuthPresentationRouteRouteWithChildren
+  '/_auth/setting': typeof AuthSettingRouteRoute
+  '/_auth/presentation/background': typeof AuthPresentationBackgroundRouteRoute
+  '/_auth/presentation/persona': typeof AuthPresentationPersonaRouteRoute
+  '/_auth/presentation/request': typeof AuthPresentationRequestRouteRoute
+  '/_auth/presentation/result': typeof AuthPresentationResultRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '' | '/home'
+  fullPaths:
+    | '/'
+    | '/login'
+    | ''
+    | '/home'
+    | '/presentation'
+    | '/setting'
+    | '/presentation/background'
+    | '/presentation/persona'
+    | '/presentation/request'
+    | '/presentation/result'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '' | '/home'
-  id: '__root__' | '/' | '/login' | '/_auth' | '/_auth/home'
+  to:
+    | '/'
+    | '/login'
+    | ''
+    | '/home'
+    | '/presentation'
+    | '/setting'
+    | '/presentation/background'
+    | '/presentation/persona'
+    | '/presentation/request'
+    | '/presentation/result'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/_auth'
+    | '/_auth/home'
+    | '/_auth/presentation'
+    | '/_auth/setting'
+    | '/_auth/presentation/background'
+    | '/_auth/presentation/persona'
+    | '/_auth/presentation/request'
+    | '/_auth/presentation/result'
   fileRoutesById: FileRoutesById
 }
 
@@ -155,12 +315,44 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/home"
+        "/_auth/home",
+        "/_auth/presentation",
+        "/_auth/setting"
       ]
     },
     "/_auth/home": {
       "filePath": "_auth/home/route.tsx",
       "parent": "/_auth"
+    },
+    "/_auth/presentation": {
+      "filePath": "_auth/presentation/route.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/presentation/background",
+        "/_auth/presentation/persona",
+        "/_auth/presentation/request",
+        "/_auth/presentation/result"
+      ]
+    },
+    "/_auth/setting": {
+      "filePath": "_auth/setting/route.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/presentation/background": {
+      "filePath": "_auth/presentation/background/route.tsx",
+      "parent": "/_auth/presentation"
+    },
+    "/_auth/presentation/persona": {
+      "filePath": "_auth/presentation/persona/route.tsx",
+      "parent": "/_auth/presentation"
+    },
+    "/_auth/presentation/request": {
+      "filePath": "_auth/presentation/request/route.tsx",
+      "parent": "/_auth/presentation"
+    },
+    "/_auth/presentation/result": {
+      "filePath": "_auth/presentation/result/route.tsx",
+      "parent": "/_auth/presentation"
     }
   }
 }
