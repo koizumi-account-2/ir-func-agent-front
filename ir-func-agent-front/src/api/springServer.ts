@@ -4,7 +4,7 @@ import { TUserContextInput, TUserContext, UserInfo } from "@/types/type";
 import { getCustomInstance } from "../lib/getCustomInstance";
 import Axios from "axios";
 
-const AXIOS_INSTANCE_SERVER = Axios.create({ 
+export const AXIOS_INSTANCE_SERVER = Axios.create({ 
     baseURL: "http://fastapi-alb-140913619.ap-northeast-1.elb.amazonaws.com/",  
     headers: {
         'Content-Type': 'application/json',

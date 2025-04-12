@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { authAtom } from '../atoms/authAtom';
 import { useState } from 'react';
-import { AXIOS_INSTANCE_SERVER } from '@/api/apiClient';
+import { AXIOS_INSTANCE_SERVER } from '@/api/springServer';    
 import getCustomInstance from '@/lib/getCustomInstance';
 import axios from 'axios';
 import { UserInfo } from '@/types/type';
