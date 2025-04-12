@@ -7,7 +7,7 @@ import { getDefaultStore } from "jotai";
 import { authAtom } from "./atoms/authAtom";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { UserInfo } from "@/types/type";
+import { healthCheck } from "@/api/springServer";
 const store = getDefaultStore();
 const queryClient = new QueryClient();
 const router = createRouter({
@@ -16,6 +16,7 @@ const router = createRouter({
   context: {
     auth: {
       isLogged: () => store.get(authAtom),
+      healthCheck: () => healthCheck(),
     },
     queryClient: undefined!, // This will be set after we wrap the app in an AuthProvider
   },
@@ -32,7 +33,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <ErrorBoundary
-        fallbackRender={({ error, resetErrorBoundary }) => {
+        fallbackRender={() => {
           return <div>エラーが発生しました</div>;
         }}
       >

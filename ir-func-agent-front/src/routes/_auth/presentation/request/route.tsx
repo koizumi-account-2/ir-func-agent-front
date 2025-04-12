@@ -59,7 +59,7 @@ function RouteComponent() {
   };
   const back = () => {
     console.log("back");
-    navigate({ to: "/presentation/backGround" });
+    navigate({ to: "/presentation/background" });
   };
   const footer = (
     <div className="flex justify-between gap-2 w-full">

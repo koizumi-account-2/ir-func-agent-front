@@ -1,11 +1,11 @@
 
 
-import { TUserContextInput, TUserContext } from "@/types/type";
+import { TUserContextInput, TUserContext, UserInfo } from "@/types/type";
 import { getCustomInstance } from "../lib/getCustomInstance";
 import Axios from "axios";
 
 const AXIOS_INSTANCE_SERVER = Axios.create({ 
-    baseURL: 'http://localhost:8080/',  
+    baseURL: import.meta.env.VITE_ENDPOINT_SERVER,  
     headers: {
         'Content-Type': 'application/json',
     },withCredentials: true});
@@ -28,6 +28,14 @@ export const updateContext = async ({id,input}:{id:string,input: TUserContextInp
         data: {
             userContext: input.userContext
         }
+    })
+}
+
+export const healthCheck = async () => {
+    const customInstance = getCustomInstance<UserInfo>(AXIOS_INSTANCE_SERVER);
+    return await customInstance({
+        method: 'GET',
+        url: `/auth`
     })
 }
 

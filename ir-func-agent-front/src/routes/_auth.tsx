@@ -1,15 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Outlet } from "@tanstack/react-router";
 import { RouterContext } from "@/types/type";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
-import { createStore, Provider, useSetAtom } from "jotai";
-import { useUserContextData } from "@/hooks/useUserContextData";
 
-import { userContextAtom } from "@/atoms/userContextAtom";
 export const Route = createFileRoute("/_auth")({
   component: RouteComponent,
   pendingComponent: () => <div>Loading...</div>,
@@ -25,23 +22,24 @@ export const Route = createFileRoute("/_auth")({
 });
 
 function RouteComponent() {
-  const setUserContext = useSetAtom(userContextAtom);
   useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      console.log("beforeunload");
-      e.preventDefault();
+    const handleBeforeUnload = () => {
+      // リロードやページ遷移を検知
+      console.log("ページがリロードされます");
+
+      // 必要に応じて、警告メッセージを表示することも可能
+      // event.returnValue = ''; // これにより、警告ダイアログが表示される（ただし、多くのブラウザではカスタムメッセージは表示されない）
+      alert("window.location.pathname" + window.location.pathname);
+      localStorage.setItem("isReloaded", window.location.pathname);
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, []);
-  // const { data, isLoading, error } = useUserContextData();
-  // console.log("useUserContextData", data);
-  // setUserContext({
-  //   userContext: data?.userContext ?? "",
-  //   totalTokens: data?.totalTokens ?? 0,
-  // });
 
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      localStorage.removeItem("isReloaded");
+    };
+  }, []);
   return (
     <SidebarProvider className="h-full">
       <AppSidebar />

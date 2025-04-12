@@ -17,7 +17,7 @@ export const PresentationSuggestion = ({
         <h3 className="text-lg font-medium">Presentationの構成提案</h3>
         {presentation.contents.map((content) => {
           return (
-            <Card className="w-full max-w-xl p-4">
+            <Card className="w-full p-4">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl font-bold">
                   {content.content_name}

@@ -16,7 +16,7 @@ export const processLabels: TProcessLabel[] = [
     title: "背景",
     description: "背景を入力してください",
     href: "/presentation/background",
-    condition: (agentState: TPresentationAgentState) => {
+    condition: () => {
       return true;
     },
   },
@@ -26,7 +26,7 @@ export const processLabels: TProcessLabel[] = [
     title: "Agentへのリクエスト",
     description: "Agentへのリクエストを入力してください",
     href: "/presentation/request",
-    condition: (agentState: TPresentationAgentState) => {
+    condition: () => {
       return true;
     },
   },

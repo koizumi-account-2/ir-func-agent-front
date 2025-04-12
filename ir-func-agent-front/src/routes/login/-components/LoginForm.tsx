@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
-  const { form, onSubmit, loading, error } = useLoginForm(afterLogin);
+  const { form, onSubmit, loading } = useLoginForm(afterLogin);
 
   return (
     <Form {...form}>

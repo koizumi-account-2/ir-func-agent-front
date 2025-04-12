@@ -4,7 +4,7 @@ import { getCustomInstance } from "../lib/getCustomInstance";
 import Axios from "axios";
 
 const AXIOS_INSTANCE_SERVER = Axios.create({ 
-    baseURL: 'http://localhost:8000/',  
+    baseURL: import.meta.env.VITE_ENDPOINT_FASTAPI,  
     headers: {
         'Content-Type': 'application/json',
     },withCredentials: true});

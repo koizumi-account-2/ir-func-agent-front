@@ -18,7 +18,7 @@ function RouteComponent() {
     presentationAgentStateAtom
   );
   const { userContext } = useAtomValue(userContextAtom);
-  const { mutate } = useCallPresenAgent();
+  const { mutate, isPending } = useCallPresenAgent();
   const { openConfirmModal } = useConfirmModal();
   const [isEdit, setIsEdit] = useState(false);
   const [personaList, setPersonaList] = useState<TPersona[]>([
@@ -67,7 +67,6 @@ function RouteComponent() {
     const updatedPersonaList = personaList.map((persona, i) =>
       i === index ? { ...persona, background } : persona
     );
-    console.log("updatedPersonaList", updatedPersonaList);
     setPersonaList(updatedPersonaList);
   };
   const next = () => {
@@ -95,7 +94,9 @@ function RouteComponent() {
   const footer = (
     <div className="flex justify-between gap-2 w-full">
       <Button onClick={back}>戻る</Button>
-      <Button onClick={next}>プレゼン作成</Button>
+      <Button onClick={next} disabled={isPending}>
+        {isPending ? "作成中..." : "プレゼン作成"}
+      </Button>
     </div>
   );
   return (

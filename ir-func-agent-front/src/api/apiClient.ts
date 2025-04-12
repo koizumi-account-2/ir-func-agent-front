@@ -16,3 +16,5 @@ export const AXIOS_INSTANCE_SERVER = Axios.create({
     'Content-Type': 'application/json',
     },withCredentials: true});
 
+
+    //fastapi-alb-263824399.ap-northeast-1.elb.amazonaws.com
