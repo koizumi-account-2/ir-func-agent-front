@@ -13,8 +13,6 @@ type LoginParams = {
 
 
 export const useLogin = () => {
-    
-    //const customInstance = useCustomInstance<UserInfo>(AXIOS_INSTANCE_DB);
     const customInstance = getCustomInstance<UserInfo>(AXIOS_INSTANCE_SERVER);
     const [, setAuth] = useAtom(authAtom);
     const [loading, setLoading] = useState(false);

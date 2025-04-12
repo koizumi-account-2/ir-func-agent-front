@@ -51,3 +51,4 @@ jobs:
             --payload '{}' \
             response.json
           cat response.json
+
