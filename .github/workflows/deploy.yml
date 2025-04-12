@@ -36,3 +36,18 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ap-northeast-1
           SOURCE_DIR: ./ir-func-agent-front/dist
+
+      - name: Configure AWS credentials for Lambda
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Invoke Lambda (post-deploy notification)
+        run: |
+          aws lambda invoke \
+            --function-name lambda-study-invalidate-lambda \
+            --payload '{}' \
+            response.json
+          cat response.json
