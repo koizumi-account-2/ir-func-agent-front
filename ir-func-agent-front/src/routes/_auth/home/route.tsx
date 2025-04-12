@@ -1,5 +1,5 @@
 import useCustomInstance from "@/lib/getCustomInstance";
-import { AXIOS_INSTANCE_SERVER } from "@/api/apiClient";
+import { AXIOS_INSTANCE_SERVER } from "@/api/springServer";
 import { UserInfo } from "@/types/type";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
