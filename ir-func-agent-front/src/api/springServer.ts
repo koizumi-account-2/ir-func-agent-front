@@ -5,7 +5,7 @@ import { getCustomInstance } from "../lib/getCustomInstance";
 import Axios from "axios";
 
 const AXIOS_INSTANCE_SERVER = Axios.create({ 
-    baseURL: import.meta.env.VITE_ENDPOINT_SERVER,  
+    baseURL: "http://fastapi-alb-140913619.ap-northeast-1.elb.amazonaws.com/",  
     headers: {
         'Content-Type': 'application/json',
     },withCredentials: true});
