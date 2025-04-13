@@ -22,10 +22,10 @@ function RouteComponent() {
       console.log("healthCheck", res);
       setAuth(res);
       const from = localStorage.getItem("isReloaded");
-      console.log("from", from);
+      //console.log("from", from);
       if (from) {
         //localStorage.removeItem("isReloaded");
-        navigate({ to: from });
+        //navigate({ to: from });
       } else {
         afterLogin();
       }
