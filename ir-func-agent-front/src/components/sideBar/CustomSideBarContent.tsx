@@ -19,6 +19,10 @@ export const CustomSideBarContent = () => {
       title: "Presentation",
       url: "/presentation/background",
     },
+    {
+      title: "Color",
+      url: "/color",
+    },
   ];
   return (
     <SidebarContent>

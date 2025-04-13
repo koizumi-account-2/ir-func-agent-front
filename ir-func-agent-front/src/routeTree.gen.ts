@@ -17,6 +17,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthSettingRouteImport } from './routes/_auth/setting/route'
 import { Route as AuthPresentationRouteImport } from './routes/_auth/presentation/route'
 import { Route as AuthHomeRouteImport } from './routes/_auth/home/route'
+import { Route as AuthColorRouteImport } from './routes/_auth/color/route'
 import { Route as AuthPresentationResultRouteImport } from './routes/_auth/presentation/result/route'
 import { Route as AuthPresentationRequestRouteImport } from './routes/_auth/presentation/request/route'
 import { Route as AuthPresentationPersonaRouteImport } from './routes/_auth/presentation/persona/route'
@@ -56,6 +57,12 @@ const AuthPresentationRouteRoute = AuthPresentationRouteImport.update({
 const AuthHomeRouteRoute = AuthHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthColorRouteRoute = AuthColorRouteImport.update({
+  id: '/color',
+  path: '/color',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -111,6 +118,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth/color': {
+      id: '/_auth/color'
+      path: '/color'
+      fullPath: '/color'
+      preLoaderRoute: typeof AuthColorRouteImport
+      parentRoute: typeof AuthImport
     }
     '/_auth/home': {
       id: '/_auth/home'
@@ -186,12 +200,14 @@ const AuthPresentationRouteRouteWithChildren =
   )
 
 interface AuthRouteChildren {
+  AuthColorRouteRoute: typeof AuthColorRouteRoute
   AuthHomeRouteRoute: typeof AuthHomeRouteRoute
   AuthPresentationRouteRoute: typeof AuthPresentationRouteRouteWithChildren
   AuthSettingRouteRoute: typeof AuthSettingRouteRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthColorRouteRoute: AuthColorRouteRoute,
   AuthHomeRouteRoute: AuthHomeRouteRoute,
   AuthPresentationRouteRoute: AuthPresentationRouteRouteWithChildren,
   AuthSettingRouteRoute: AuthSettingRouteRoute,
@@ -203,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRouteRoute
   '': typeof AuthRouteWithChildren
+  '/color': typeof AuthColorRouteRoute
   '/home': typeof AuthHomeRouteRoute
   '/presentation': typeof AuthPresentationRouteRouteWithChildren
   '/setting': typeof AuthSettingRouteRoute
@@ -216,6 +233,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRouteRoute
   '': typeof AuthRouteWithChildren
+  '/color': typeof AuthColorRouteRoute
   '/home': typeof AuthHomeRouteRoute
   '/presentation': typeof AuthPresentationRouteRouteWithChildren
   '/setting': typeof AuthSettingRouteRoute
@@ -230,6 +248,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRouteRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/_auth/color': typeof AuthColorRouteRoute
   '/_auth/home': typeof AuthHomeRouteRoute
   '/_auth/presentation': typeof AuthPresentationRouteRouteWithChildren
   '/_auth/setting': typeof AuthSettingRouteRoute
@@ -245,6 +264,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | ''
+    | '/color'
     | '/home'
     | '/presentation'
     | '/setting'
@@ -257,6 +277,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | ''
+    | '/color'
     | '/home'
     | '/presentation'
     | '/setting'
@@ -269,6 +290,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/_auth'
+    | '/_auth/color'
     | '/_auth/home'
     | '/_auth/presentation'
     | '/_auth/setting'
@@ -315,10 +337,15 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
+        "/_auth/color",
         "/_auth/home",
         "/_auth/presentation",
         "/_auth/setting"
       ]
+    },
+    "/_auth/color": {
+      "filePath": "_auth/color/route.tsx",
+      "parent": "/_auth"
     },
     "/_auth/home": {
       "filePath": "_auth/home/route.tsx",
