@@ -24,7 +24,7 @@ export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="あなたのメールアドレス" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -39,17 +39,15 @@ export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="password" {...field} />
+                <Input placeholder="****" type="password" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription></FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
+          {loading ? "Loading..." : "ログイン"}
         </Button>
       </form>
     </Form>

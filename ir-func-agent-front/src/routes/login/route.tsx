@@ -40,7 +40,6 @@ function RouteComponent() {
     <div className="flex items-center justify-center h-screen p-4">
       {/* <TestButton onClick={clickHandler} variant={"danger"}>login</TestButton> */}
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
-        VITE_SERVER_ENDPOINT:{import.meta.env.VITE_SERVER_ENDPOINT}
         <LoginForm afterLogin={afterLogin} />
       </div>
     </div>

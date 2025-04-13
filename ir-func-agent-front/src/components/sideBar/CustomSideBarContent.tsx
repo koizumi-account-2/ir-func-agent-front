@@ -16,12 +16,12 @@ export const CustomSideBarContent = () => {
       url: "/home",
     },
     {
-      title: "Presentation",
-      url: "/presentation/background",
-    },
-    {
       title: "Color",
       url: "/color",
+    },
+    {
+      title: "Presentation",
+      url: "/presentation/background",
     },
   ];
   return (
