@@ -39,7 +39,7 @@ export const LoginForm = ({ afterLogin }: { afterLogin: () => void }) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="****" type="password" {...field} />
+                <Input placeholder="****pass" type="password" {...field} />
               </FormControl>
               <FormDescription></FormDescription>
               <FormMessage />
